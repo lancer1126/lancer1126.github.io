@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite-url/tags/index.html</loc>
+    
+    <lastmod>2020-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite-url/categories/index.html</loc>
+    
+    <lastmod>2020-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite-url/2020/12/24/Hexo-Theme-LiveMyLife/</loc>
     
     <lastmod>2020-12-24</lastmod>
@@ -24,20 +38,6 @@
   
   <url>
     <loc>http://yoursite-url/archive/index.html</loc>
-    
-    <lastmod>2020-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite-url/tags/index.html</loc>
-    
-    <lastmod>2020-12-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite-url/categories/index.html</loc>
     
     <lastmod>2020-12-24</lastmod>
     

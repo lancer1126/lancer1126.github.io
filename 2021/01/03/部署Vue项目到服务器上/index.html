@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../../../css/highlight.css">
-<link rel="stylesheet" href="../../../css/widget.css">
-<link rel="stylesheet" href="../../../css/rocket.css">
-<link rel="stylesheet" href="../../../css/signature.css">
-<link rel="stylesheet" href="../../../css/catalog.css">
-<link rel="stylesheet" href="../../../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -138,10 +138,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="https://lancer1126.github.io/archives/2020/12/">
+  <link rel="canonical" href="https://lancer1126.github.io/2021/01/03/部署Vue项目到服务器上/">
   <title>
     
-    Relax
+    Vue部署到云服务器中 - Relax
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -289,8 +289,8 @@
 
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('/img/header_img/blood.jpg');
+       /*post*/
+        background-image: url('/img/header_img/elder.jpg');
       
     }
 
@@ -312,10 +312,42 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>老王的博客</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">这是老王的博客</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+              
+              <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+              
+            </div>
+            <h1>Vue部署到云服务器中</h1>
+            <h2 class="subheading">Linux</h2>
+            <span class="meta">
+              Posted by lancer1126 on
+              2021-01-03
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">2</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">662</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -356,243 +388,274 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <blockquote>
+<p>最近学习了一下Vue的知识，便想着在服务器上部署一个Vue项目，查找了一番之后采用如下方式。</p>
+</blockquote>
+<h2 id="Vue项目打包"><a href="#Vue项目打包" class="headerlink" title="Vue项目打包"></a>Vue项目打包</h2><p>在Vue项目完成后，要将其部署到云服务器中去，我使用的是腾讯云服务器。<br>Vue项目中执行<code>npm run build</code>命令会在目录中生成<code>dist</code>文件夹，其中包含的就是Vue打包好的项目。  </p>
+<h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><p>项目部署需要<code>Nginx</code>和<code>Node.js</code>的支持，使用ssh终端连接服务器，执行以下命令进行安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nodejs npm </span><br><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+<p>在Nginx安装成功后使用浏览器访问服务器地址或域名会显示Nginx的欢迎页面。<br><img src="https://ftp.bmp.ovh/imgs/2021/01/8275f49633d7129a.jpg" alt="Nginx欢迎页面"><br>在ssh终端中执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;www&#x2F;html</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>在该文件夹下可以看到一个<code>index.nginx-debian.html</code>文件，打开该文件可以发现这便是nginx的欢迎页面的来源。</p>
+<h2 id="项目打包文件上传"><a href="#项目打包文件上传" class="headerlink" title="项目打包文件上传"></a>项目打包文件上传</h2><p>使用Ftp工具将之前打包好的<code>dist</code>文件夹上传到服务器中<br>为了方便，我这里直接将其上传到nginx欢迎文件所在目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;www&#x2F;html</span><br><span class="line">sudo mkdir vue</span><br></pre></td></tr></table></figure>
+<p>也可以使用<code>Github</code>来代替上传<br>将项目上传到Github中，再在服务器中使用<code>git clone</code>将线上项目克隆到本地</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo git clone https:&#x2F;&#x2F;github.com&#x2F;xxx</span><br></pre></td></tr></table></figure>
+<p>由于clone下来的是源代码，所以需要对其进行打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install    &#x2F;&#x2F; 安装依赖</span><br><span class="line">sudo npm run build  &#x2F;&#x2F; 打包</span><br></pre></td></tr></table></figure>
+<p>这样会在项目文件中生成<code>dist</code>文件夹，最终效果与上一个方法一致。</p>
+<h2 id="配置Nginx"><a href="#配置Nginx" class="headerlink" title="配置Nginx"></a>配置Nginx</h2><p>接下去需要修改Nginx配置  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;etx&#x2F;nginx&#x2F;sites-available</span><br></pre></td></tr></table></figure>
+<p>在该文件夹下有一个<code>default</code>文件，对其进行修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim default</span><br></pre></td></tr></table></figure>
+<p>其中一行是：<code>root/var/www/html</code><br>这就是为什么我们浏览器访问服务器看到的是Nginx的欢迎页面，我们只要将其改为我们自己Vue项目的dist地址即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修改</span><br><span class="line">root &#x2F;var&#x2F;www&#x2F;html</span><br><span class="line">为：</span><br><span class="line">rrot var&#x2F;www&#x2F;html&#x2F;vue&#x2F;dist</span><br></pre></td></tr></table></figure>
+<p>保存推出，使用<code>service nginx restart</code>重启Nginx来使其生效  </p>
+<p>接下去再访问ip地址就可以看到我们自己Vue项目的页面。</p>
+<p>但还有一个问题，在访问这个IP下的任意一个路径时，<code>例如：ip/abc</code>，会返回一个404页面，这时需要在nginx的default文件中添加如下设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server_name _ ;</span><br><span class="line">&#x2F;&#x2F; 在server_name _; 后面添加这一段代码</span><br><span class="line">error_page 404 &#x2F;;</span><br></pre></td></tr></table></figure>
+<p>保存重启Nginx，再去访问不管在哪个路径下，看到的都会是Vue的项目页面。</p>
 
-      
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
 
-      
-
-      <!-- 归档列表 -->
-
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2021">
-          <span class="tag-text">2021</span>
-        </span>
-        <ul>
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            01-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2021/01/03/部署Vue项目到服务器上/" style="color: #0085a1">
-              <span>
-                Vue部署到云服务器中
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+          
+          <li class="next">
+            <a href="/2020/12/28/Java中的Stream流/" data-toggle="tooltip" data-placement="top" title="Java中的Stream流">Next Post &rarr;</a>
           </li>
           
         </ul>
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-          <span class="tag-text">2020</span>
-        </span>
-        <ul>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            12-28
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/12/28/Java中的Stream流/" style="color: #0085a1">
-              <span>
-                Java中的Stream流
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-        </ul>
-      </div>
-      
 
-
-    </div>
-  </div>
-</div>
-
-
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
         
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
-
-
-        <hr>
-    
-        <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
-    
-    
-    
-    <a href="/tags/#Java" title="Java" rel="1">Java</a>
-    
-    
-    
-    <a href="/tags/#Linux" title="Linux" rel="1">Linux</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/morty.png" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>There is no description</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/lancer1126">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../../../2021/01/03/%E9%83%A8%E7%BD%B2Vue%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A/">
-      <li>Vue部署到云服务器中</li>
-    </a>
-    
-    <a href="../../../2020/12/28/Java%E4%B8%AD%E7%9A%84Stream%E6%B5%81/">
-      <li>Java中的Stream流</li>
-    </a>
-    
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=Vue部署到云服务器中&body=Hi,I found this website and thought you might like it https://lancer1126.github.io/2021/01/03/部署Vue项目到服务器上/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
   </ul>
 </div>
 
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
-        <hr>
-    
-        <!-- Friends Blog -->
-
-<!-- <h5>FRIENDS</h5> -->
-<h5><a href="/">FRIENDS</a></h5>
-<ul class="list-inline">
-  
-  <li><a href="" target="_blank">No friend,for now</a></li>
-  
-</ul>
-
-
-        <hr>
-    
+        <!-- Sharing End -->
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../2021/01/">一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="">十二月 2020</a><span class="archive-list-count">1</span></li></ul>
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+<!-- gitalk start -->
+<!-- Docs:https://github.com/gitalk/gitalk/blob/master/readme-cn.md -->
+
+<div id="gitalk-container"></div>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.js"></script> -->
+<script src="/js/comment/gitalk.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: '',
+    id: 'Sun Jan 03 2021 00:00:00 GMT+0800', // Ensure uniqueness and length less than 50
+    distractionFreeMode: false, // Facebook-like distraction free mode
+    perPage: 10 ,
+    pagerDirection: 'last',
+    createIssueManually: false ,
+    language: 'en'
+  });
+  gitalk.render('gitalk-container');
+
+  var gtFolded = () => {
+    setTimeout(function() {
+      let markdownBody = document.getElementsByClassName("markdown-body");
+      let list = Array.from(markdownBody);
+      list.forEach(item => {
+        if (item.clientHeight > 250) {
+          item.classList.add('gt-comment-body-folded');
+          item.style.maxHeight = '250px';
+          item.title = 'Click to Expand';
+          item.onclick = function() {
+            item.classList.remove('gt-comment-body-folded');
+            item.style.maxHeight = '';
+            item.title = '';
+            item.onclick = null;
+          };
+        }
+      })
+    }, 800);
+  }
+</script>
+
+<!-- gitalk end -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+        <!-- comments end -->
+        <hr>
+
+      </div>
+
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Vue项目打包"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Vue项目打包</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#服务器配置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">服务器配置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#项目打包文件上传"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">项目打包文件上传</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置Nginx"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">配置Nginx</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+        <!-- Featured Tags -->
+        
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Vue" title="Vue">Vue</a>
+            
+            <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+            
+          </div>
+        </section>
+        
+
+        <!-- Friends Blog -->
+        
+        <hr>
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+
+          
+          <li>
+            <a href="" target="_blank">No friend,for now</a>
+          </li>
+          
+        </ul>
+        
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->

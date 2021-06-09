@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../../../css/highlight.css">
-<link rel="stylesheet" href="../../../css/widget.css">
-<link rel="stylesheet" href="../../../css/rocket.css">
-<link rel="stylesheet" href="../../../css/signature.css">
-<link rel="stylesheet" href="../../../css/catalog.css">
-<link rel="stylesheet" href="../../../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -138,10 +138,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="https://lancer1126.github.io/archives/2020/12/">
+  <link rel="canonical" href="https://lancer1126.github.io/2021/06/09/Java中toString与(String)的区别/">
   <title>
     
-    Relax
+    Java中toString与(String)的区别 - Relax
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -289,8 +289,8 @@
 
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('/img/header_img/blood.jpg');
+       /*post*/
+        background-image: url('/img/header_img/toString.jpg');
       
     }
 
@@ -312,10 +312,40 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>老王的博客</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">这是老王的博客</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+              
+            </div>
+            <h1>Java中toString与(String)的区别</h1>
+            <h2 class="subheading">Java笔记</h2>
+            <span class="meta">
+              Posted by lancer1126 on
+              2021-06-09
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">3</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">852</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -356,285 +386,265 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <blockquote>
+<p>学习记录</p>
+</blockquote>
+<h2 id="toString-方法"><a href="#toString-方法" class="headerlink" title="toString()方法"></a>toString()方法</h2><p>API 中关于 toString()的描述：<br>返回该对象的字符串表示。通常， toString 方法会返回一个“以文本方式表示”此对象的字符串。结果应是一个简明但易于读懂的信息表达式。建议所有子类都重写此方法。<br>Object 类的 toString 方法返回一个字符串，该字符串由类名（对象是该类的一个实例）、at 标记符“ @ ”和此对象哈希码的无符号十六进制表示组成。换句话说，该方法返回一个字符串，它的值等于:  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getClass().getName() + <span class="string">'@'</span> + Integer.toHexString(hashCode())</span><br></pre></td></tr></table></figure>
+<p>toString()方法返回的是这个对象的字符串表示，就像是这个对象的名字一样，任何对象都可以有自己的名字，你可以重写其toString()方法，给其赋予任意的名字。</p>
+<p>但是调用toString()方法的对象不能为 null，否则会抛出异常：java.lang.NullPointerException。</p>
+<h2 id="String-valueOf-方法"><a href="#String-valueOf-方法" class="headerlink" title="String.valueOf()方法"></a>String.valueOf()方法</h2><p>调用toString()方法的对象不能是null，但 String.valueOf()方法不管这些，但这个方法也是调用了toString()方法，只不过在调用之前做了点处理，在源码中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the string representation of the &lt;code&gt;Object&lt;/code&gt; argument.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>   obj   an &lt;code&gt;Object&lt;/code&gt;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  if the argument is &lt;code&gt;null&lt;/code&gt;, then a string equal to</span></span><br><span class="line"><span class="comment">     *          &lt;code&gt;"null"&lt;/code&gt;; otherwise, the value of</span></span><br><span class="line"><span class="comment">     *          &lt;code&gt;obj.toString()&lt;/code&gt; is returned.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span>     java.lang.Object#toString()</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">valueOf</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (obj == <span class="keyword">null</span>) ? <span class="string">"null"</span> : obj.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法在调用 <strong>toString()</strong> 之前判断一下这个对象是不是null，如果不是null，则正常调用其toString()方法，如果是null 的话，则返回 字符串 形式的null。</p>
+<p><strong>String.valueOf()</strong> 比起直接用 <strong>toString()</strong> 来说虽然可能会减少报错的机会，但是如果在对比对象值的时要小心如果用 <strong>if(String.valueOf（object）==null)</strong> 肯定是不行的了。</p>
+<h2 id="强制转换-String-data"><a href="#强制转换-String-data" class="headerlink" title="强制转换 (String)data"></a>强制转换 (String)data</h2><p>每个对象的类型在对象创建的时候已经确定并且不能更改，所谓强制转换也只是使其表面上换成了另一种类型，可以使用其方法对这个对象进行处理。那么可想而知，把物品A 当成物品B 来使用，当A 能能够被当成 B的时候大家都相安无事，你走你的路，我过我的桥，一旦A 不能被当成B ，它不会去自动调用 toString()方法，而是马上就会报错。  </p>
+<p>例一：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer obj1 = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">String strVal = (String)obj1;　　<span class="comment">//Cannot cast from Integer to String</span></span><br></pre></td></tr></table></figure>
+<p>因为obj1 在创建的时候就是 Integer 类型，不能转换成 String 类型，所以在编译期间就会报错 <strong>Cannot cast from Integer to String</strong>。</p>
+<p>例二：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Object obj2 = <span class="keyword">new</span> Integer(<span class="number">100</span>);</span><br><span class="line">String strVal = (String)obj2;</span><br></pre></td></tr></table></figure>
+<p>obj2 虽然本质上是 Integer 类型，但其表面上确是 Object 类型，所以在编译的时候没有报错，但因为 obj2 在创建的时候已经确定了其在本质上 Integer 类型，所以这两行代码在运行时依然会报错，因为 Integer 型不能转换成 String 类型。</p>
+<p>当然，如果要把 Integer 型转换成 String，可以调用其 toString()方法：Integer.toString(obj1) 或者 String.valueOf(obj1); 对应于其他自定义类型，则调用自己重写的 toString() 方法。</p>
+<p>此外，因null值可以被强制转换为任何类型，所以(String)null也是合法的。</p>
 
-      
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
 
-      
-
-      <!-- 归档列表 -->
-
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2021">
-          <span class="tag-text">2021</span>
-        </span>
-        <ul>
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            06-09
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2021/06/09/Java中toString与(String)的区别/" style="color: #0085a1">
-              <span>
-                Java中toString与(String)的区别
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            01-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2021/01/03/Delete `␍`  prettierprettier 踩坑记/" style="color: #0085a1">
-              <span>
-                Delete `␍`  prettierprettier 踩坑记
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            01-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2021/01/03/部署Vue项目到服务器上/" style="color: #0085a1">
-              <span>
-                Vue部署到云服务器中
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+          <li class="next">
+            <a href="/2021/01/03/部署Vue项目到服务器上/" data-toggle="tooltip" data-placement="top" title="Vue部署到云服务器中">Next Post &rarr;</a>
           </li>
           
         </ul>
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-          <span class="tag-text">2020</span>
-        </span>
-        <ul>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            12-28
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/12/28/Java中的Stream流/" style="color: #0085a1">
-              <span>
-                Java中的Stream流
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-        </ul>
-      </div>
-      
 
-
-    </div>
-  </div>
-</div>
-
-
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
         
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
-
-
-        <hr>
-    
-        <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#Vue" title="Vue" rel="2">Vue</a>
-    
-    
-    
-    <a href="/tags/#Java" title="Java" rel="2">Java</a>
-    
-    
-    
-    <a href="/tags/#Linux" title="Linux" rel="1">Linux</a>
-    
-    
-    
-    <a href="/tags/#踩坑" title="踩坑" rel="1">踩坑</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/morty.png" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>There is no description</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/lancer1126">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../../../2021/06/09/Java%E4%B8%ADtoString%E4%B8%8E(String)%E7%9A%84%E5%8C%BA%E5%88%AB/">
-      <li>Java中toString与(String)的区别</li>
-    </a>
-    
-    <a href="../../../2021/01/03/%E9%83%A8%E7%BD%B2Vue%E9%A1%B9%E7%9B%AE%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A/">
-      <li>Vue部署到云服务器中</li>
-    </a>
-    
-    <a href="../../../2021/01/03/Delete%20%60%E2%90%8D%60%20%20prettierprettier%20%E8%B8%A9%E5%9D%91%E8%AE%B0/">
-      <li>Delete `␍`  prettierprettier 踩坑记</li>
-    </a>
-    
-    <a href="../../../2020/12/28/Java%E4%B8%AD%E7%9A%84Stream%E6%B5%81/">
-      <li>Java中的Stream流</li>
-    </a>
-    
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=Java中toString与(String)的区别&body=Hi,I found this website and thought you might like it https://lancer1126.github.io/2021/06/09/Java中toString与(String)的区别/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
   </ul>
 </div>
 
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 
-        <hr>
-    
-        <!-- Friends Blog -->
-
-<!-- <h5>FRIENDS</h5> -->
-<h5><a href="/">FRIENDS</a></h5>
-<ul class="list-inline">
-  
-  <li><a href="" target="_blank">No friend,for now</a></li>
-  
-</ul>
-
-
-        <hr>
-    
+        <!-- Sharing End -->
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../2021/06/">六月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="">十二月 2020</a><span class="archive-list-count">1</span></li></ul>
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+<!-- gitalk start -->
+<!-- Docs:https://github.com/gitalk/gitalk/blob/master/readme-cn.md -->
+
+<div id="gitalk-container"></div>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.js"></script> -->
+<script src="/js/comment/gitalk.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: '',
+    id: 'Wed Jun 09 2021 00:00:00 GMT+0800', // Ensure uniqueness and length less than 50
+    distractionFreeMode: false, // Facebook-like distraction free mode
+    perPage: 10 ,
+    pagerDirection: 'last',
+    createIssueManually: false ,
+    language: 'en'
+  });
+  gitalk.render('gitalk-container');
+
+  var gtFolded = () => {
+    setTimeout(function() {
+      let markdownBody = document.getElementsByClassName("markdown-body");
+      let list = Array.from(markdownBody);
+      list.forEach(item => {
+        if (item.clientHeight > 250) {
+          item.classList.add('gt-comment-body-folded');
+          item.style.maxHeight = '250px';
+          item.title = 'Click to Expand';
+          item.onclick = function() {
+            item.classList.remove('gt-comment-body-folded');
+            item.style.maxHeight = '';
+            item.title = '';
+            item.onclick = null;
+          };
+        }
+      })
+    }, 800);
+  }
+</script>
+
+<!-- gitalk end -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+        <!-- comments end -->
+        <hr>
+
+      </div>
+
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#toString-方法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">toString()方法</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#String-valueOf-方法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">String.valueOf()方法</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#强制转换-String-data"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">强制转换 (String)data</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+        <!-- Featured Tags -->
+        
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Java" title="Java">Java</a>
+            
+          </div>
+        </section>
+        
+
+        <!-- Friends Blog -->
+        
+        <hr>
+        <h5>FRIENDS</h5>
+        <ul class="list-inline">
+
+          
+          <li>
+            <a href="" target="_blank">No friend,for now</a>
+          </li>
+          
+        </ul>
+        
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->
